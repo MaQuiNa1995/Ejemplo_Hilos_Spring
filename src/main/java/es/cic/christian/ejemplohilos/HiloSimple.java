@@ -21,9 +21,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>Clase hilo que lo único que hace es esperar 2 Segundos y luego se cierra</p>
- * <p>@Component("Nombre Del Bean")</p>
- * <p>@Scope("Tipo De Instancia")</p>
+ * <p>Clase hilo que lo único que hace es esperar dos Segundos y luego se cierra</p>
+ * <p>'@Component("Nombre Del Bean")'</p>
+ * <p>Indica a Spring que es candidato a ser manejado por el y a continuación le ponemos nombre</p>
+ * <p>'@Scope("Tipo De Instancia")'</p>
+ * <p>Indica a spring las veces que podría ser instanciado</p>
  * @see <a href="http://www.tutorialspoint.com/spring/spring_bean_scopes.htm">Documentación Scope</a>
  * @author cmunoz
  */
@@ -34,6 +36,9 @@ public class HiloSimple extends Thread {
     private static final Logger LOG = Logger.getLogger(HiloSimple.class.getName());
     private static final long TIEMPO_ESPERA_HILO = 2000L;
 
+    /**
+     * Método que se ejecuta cuando se inicia el hilo
+     */
     @Override
     public void run() {
 
@@ -41,7 +46,7 @@ public class HiloSimple extends Thread {
 
         try {
 
-            Thread.sleep(TIEMPO_ESPERA_HILO);
+            sleep(TIEMPO_ESPERA_HILO);
 
         } catch (InterruptedException ie) {
             LOG.info("Se Interrumpió El ".concat(ie.getMessage()));

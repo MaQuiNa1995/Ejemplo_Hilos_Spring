@@ -15,23 +15,26 @@
  */
 package es.cic.christian.ejemplohilos;
 
+import java.util.logging.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
+ * <p>
  * Clase De Configuración De La Aplicación
- *
+ * </p>
+ * 
  * @author cmunoz
  *
  * <p>
- * @Configuration
+ * '@Configuration'
  * </p><p>
- * Indica a Spring que esta clase se usara de contexto para la
- * definición de beans
+ * Indica a Spring que esta clase se usara de contexto para la definición de
+ * beans
  * </p><p>
- * @ComponentScan(basePackages = "es.cic.christian")
+ * '@ComponentScan(basePackages = "es.cic.christian")'
  * </p><p>
  * Indica a Spring donde buscar las clases a las que hagas referencia en Beans
  * </p>
@@ -40,16 +43,27 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @ComponentScan(basePackages = "es.cic.christian")
 public class Configuracion {
 
-    private static final int HILOS_MAXIMOS_USADOS = 8;
-    private static final int HILOS_MAXIMOS_PERMITIDOS = 10;
+    private static final Logger LOG = Logger.getLogger(Configuracion.class.getName());
+
+    private static final int HILOS_MAXIMOS_COLA = 16;
+    private static final int HILOS_MAXIMOS_USADOS = 6;
+    private static final int HILOS_MAXIMOS_PERMITIDOS = 16;
 
     @Bean(name = "EjecutadorTask")
     public ThreadPoolTaskExecutor taskExecutor() {
+
+        LOG.info(
+                "Creando ThreadPoolTaskExecutor con:"
+                .concat("\n - CorePoolSize: ").concat(String.valueOf(HILOS_MAXIMOS_USADOS))
+                .concat("\n - MaxPoolSize: ").concat(String.valueOf(HILOS_MAXIMOS_PERMITIDOS))
+                .concat("\n - QueueCapacity: ").concat(String.valueOf(HILOS_MAXIMOS_COLA))
+        );
 
         ThreadPoolTaskExecutor poolConexiones = new ThreadPoolTaskExecutor();
 
         poolConexiones.setCorePoolSize(HILOS_MAXIMOS_USADOS);
         poolConexiones.setMaxPoolSize(HILOS_MAXIMOS_PERMITIDOS);
+        poolConexiones.setQueueCapacity(HILOS_MAXIMOS_COLA);
         poolConexiones.setWaitForTasksToCompleteOnShutdown(true);
 
         return poolConexiones;
