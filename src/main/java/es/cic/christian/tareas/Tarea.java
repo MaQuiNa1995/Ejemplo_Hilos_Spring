@@ -31,24 +31,44 @@ import org.springframework.stereotype.Component;
  * @see
  * <a href="http://howtodoinjava.com/spring/spring-core/4-ways-to-schedule-tasks-in-spring-3-scheduled-example/">Documentación
  * Schedule</a>
+ * @see <a href="http://www.tutorialspoint.com/spring/spring_bean_scopes.htm">Documentación Scope</a>
  */
 @Scope("singleton")
 @Component("EjecutadorTarea")
 public class Tarea {
 
-    private static final int SEGUNDOS_TAREA=2000;
+    private static final int SEGUNDOS_TAREA_MENSAJE=2000;
+    private static final long SEGUNDOS_TAREA_CERRAR=6000;
     private static final Logger LOG = Logger.getLogger(Tarea.class.getName());
 
-    //@Scheduled(fixedRate = 2000)
-    @Scheduled(fixedDelay = SEGUNDOS_TAREA)
+    /**
+     * Método que se ejecuta cada dos segundos mostrando la hora
+     */
+    @Scheduled(fixedDelay = SEGUNDOS_TAREA_MENSAJE)
     public void tareaProgramada() {
         LOG.info("Me Ejecuto Cada "
-                .concat(String.valueOf(SEGUNDOS_TAREA/1000))
+                .concat(String.valueOf(SEGUNDOS_TAREA_MENSAJE/1000))
                 .concat(" Segundos Mostrándote: ")
                 .concat(new Date().toString()));
     }
 
+    /**
+     * Método usado para cerrar la aplicación a los seis segundos
+     */
     public void ejecutar() {
-
+        
+        try {
+            
+            Thread.sleep(SEGUNDOS_TAREA_CERRAR);
+            
+        } catch (InterruptedException ex) {
+            LOG.log(Level.WARNING, "Error {0}", ex.getMessage());
+        }
+        
+        LOG.info("Me Ejecuto A Los 6 Segundos Para Cerrar La Aplicación");
+        
+        System.exit(0);
+        
     }
+    
 }

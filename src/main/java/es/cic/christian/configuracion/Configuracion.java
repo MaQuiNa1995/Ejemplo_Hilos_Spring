@@ -64,7 +64,8 @@ public class Configuracion {
     private static final int HILOS_MAXIMOS_USADOS = 6;
     private static final int HILOS_MAXIMOS_PERMITIDOS = 16;
 
-    @Bean(name = "EjecutadorTask")
+    // ------------------- Manejador De Hilos -------------------
+    @Bean(name = "EjecutadorHilos")
     public ThreadPoolTaskExecutor taskExecutor() {
 
         LOG.info(
@@ -84,7 +85,8 @@ public class Configuracion {
         return poolConexiones;
     }
 
-    @Bean
+    // ------------------- Manejador De Tareas -------------------
+    @Bean(name = "EjecutadorTareas")
     public Executor taskScheduler() {
         return new ThreadPoolTaskScheduler();
     }

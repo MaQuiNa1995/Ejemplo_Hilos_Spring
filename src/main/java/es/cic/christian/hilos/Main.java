@@ -27,8 +27,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
- * Clase Main que inicia la aplicación
- * @author cmunoz
+ * Clase Main que inicia el ejemplo de Hilos
+ * 
+ * @author Christian Muñoz Ason
+ * @version 0.1.0
+ * @since 1.8
  */
 public class Main {
 
@@ -46,7 +49,7 @@ public class Main {
         ThreadPoolTaskExecutor ejecutadorTareas;
         
         contexto = new AnnotationConfigApplicationContext(Configuracion.class);
-        ejecutadorTareas = (ThreadPoolTaskExecutor) contexto.getBean("EjecutadorTask");
+        ejecutadorTareas = (ThreadPoolTaskExecutor) contexto.getBean("EjecutadorHilos");
 
         LOG.log(Level.INFO, "Creando {0} Hilos", NUMERO_HILOS);
 

@@ -21,6 +21,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
+ * Clase Main que inicia el ejemplo de Tareas Programadas
+ * 
  * @author Christian Muñoz Ason
  * @version 0.1.0
  * @since 1.8
@@ -29,6 +31,11 @@ public class Main {
 
     private static final Logger LOG = Logger.getLogger(Main.class.getName());
 
+    /**
+     * Método main que inicia la aplicación
+     *
+     * @param args Array de parámetros que se le pueden pasar al método
+     */
     public static void main(String[] args) {
 
         ApplicationContext contexto;
