@@ -77,6 +77,8 @@ public class Configuracion {
 
         ThreadPoolTaskExecutor poolConexiones = new ThreadPoolTaskExecutor();
 
+        poolConexiones.setThreadNamePrefix("Maqui-");
+        
         poolConexiones.setCorePoolSize(HILOS_MAXIMOS_USADOS);
         poolConexiones.setMaxPoolSize(HILOS_MAXIMOS_PERMITIDOS);
         poolConexiones.setQueueCapacity(HILOS_MAXIMOS_COLA);
