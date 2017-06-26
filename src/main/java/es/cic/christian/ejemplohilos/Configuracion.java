@@ -37,6 +37,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  * '@ComponentScan(basePackages = "es.cic.christian")'
  * </p><p>
  * Indica a Spring donde buscar las clases a las que hagas referencia en Beans
+ * </p><p>
+ * @see <a href="https://stackoverflow.com/questions/1878806/what-is-the-difference-between-corepoolsize-and-maxpoolsize-in-the-spring-thread">Preguntas Relacionadas SO</a>
  * </p>
  */
 @Configuration
@@ -45,7 +47,8 @@ public class Configuracion {
 
     private static final Logger LOG = Logger.getLogger(Configuracion.class.getName());
 
-    private static final int HILOS_MAXIMOS_COLA = 16;
+    // Está por defecto a Integer.MAX_VALUE no haría falta hacerlo
+    private static final int HILOS_MAXIMOS_COLA = Integer.MAX_VALUE;
     private static final int HILOS_MAXIMOS_USADOS = 6;
     private static final int HILOS_MAXIMOS_PERMITIDOS = 16;
 
