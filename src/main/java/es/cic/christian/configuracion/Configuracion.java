@@ -88,6 +88,7 @@ public class Configuracion {
     // ------------------- Manejador De Tareas -------------------
     @Bean(name = "EjecutadorTareas")
     public Executor taskScheduler() {
+        LOG.info("Creando Manejador De Tareas");
         return new ThreadPoolTaskScheduler();
     }
 
