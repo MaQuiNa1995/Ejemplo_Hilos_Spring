@@ -64,7 +64,10 @@ public class Configuracion {
     private static final int HILOS_MAXIMOS_USADOS = 6;
     private static final int HILOS_MAXIMOS_PERMITIDOS = 16;
 
-    // ------------------- Manejador De Hilos -------------------
+    /**
+     * Creación del bean del manejador de hilos
+     * @return objeto que se encarga del manejador de hilos
+     */
     @Bean(name = "EjecutadorHilos")
     public ThreadPoolTaskExecutor taskExecutor() {
 
@@ -76,8 +79,6 @@ public class Configuracion {
         );
 
         ThreadPoolTaskExecutor poolConexiones = new ThreadPoolTaskExecutor();
-
-        poolConexiones.setThreadNamePrefix("Maqui-");
         
         poolConexiones.setCorePoolSize(HILOS_MAXIMOS_USADOS);
         poolConexiones.setMaxPoolSize(HILOS_MAXIMOS_PERMITIDOS);
@@ -87,7 +88,10 @@ public class Configuracion {
         return poolConexiones;
     }
 
-    // ------------------- Manejador De Tareas -------------------
+    /**
+     * Creación del bean del manejador de tareas
+     * @return objeto que se encarga de la programación de tareas
+     */
     @Bean(name = "EjecutadorTareas")
     public Executor taskScheduler() {
         LOG.info("Creando Manejador De Tareas");
