@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package es.cic.christian.hilos;
+package es.cic.christian.multipleshilos;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,20 +21,36 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>Clase hilo que lo único que hace es esperar dos Segundos y luego se cierra</p>
- * <p>'@Component("Nombre Del Bean")'</p>
- * <p>Indica a Spring que es candidato a ser manejado por el y a continuación le ponemos nombre</p>
- * <p>'@Scope("Tipo De Instancia")'</p>
- * <p>Indica a spring las veces que podría ser instanciado</p>
- * @see <a href="http://www.tutorialspoint.com/spring/spring_bean_scopes.htm">Documentación Scope</a>
+ * <p>
+ * Clase hilo que lo único que hace es esperar dos Segundos y luego se
+ * cierra</p>
+ * <p>
+ * '@Component("Nombre Del Bean")'</p>
+ * <p>
+ * Indica a Spring que es candidato a ser manejado por el y a continuación le
+ * ponemos nombre</p>
+ * <p>
+ * '@Scope("Tipo De Instancia")'</p>
+ * <p>
+ * Indica a spring las veces que podría ser instanciado</p>
+ *
+ * @see
+ * <a href="http://www.tutorialspoint.com/spring/spring_bean_scopes.htm">Documentación
+ * Scope</a>
  * @author cmunoz
  */
-@Component("HiloSimple")
+@Component("HiloDiez")
 @Scope("prototype")
-public class HiloSimple extends Thread {
+public class HiloDiezSegundos extends Thread {
 
-    private static final Logger LOG = Logger.getLogger(HiloSimple.class.getName());
-    private static final long TIEMPO_ESPERA_HILO = 2000L;
+    /**
+     * Log genérico de la clase
+     */
+    private static final Logger LOG = Logger.getLogger(HiloDiezSegundos.class.getName());
+    /**
+     * Tiempo que espera el hilo para seguir con su ejecución
+     */
+    private static final long TIEMPO_ESPERA_HILO = 10000L;
 
     /**
      * Método que se ejecuta cuando se inicia el hilo
