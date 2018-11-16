@@ -15,16 +15,17 @@
  */
 package es.cic.christian.hilos;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
 /**
  * @Autor cmunoz
  * @Fecha 26-jun-2017
  */
 import es.cic.christian.configuracion.Configuracion;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
  * Clase Main que inicia el ejemplo de Hilos
@@ -41,44 +42,48 @@ public class Main {
 
     /**
      * Método main que inicia la aplicación
-     * @param args Array de parámetros que se le pueden pasar al método
+     * 
+     * @param args
+     *            Array de parámetros que se le pueden pasar al método
      */
     public static void main(String[] args) {
 
-        ApplicationContext contexto;
-        ThreadPoolTaskExecutor ejecutadorTareas;
-        
-        contexto = new AnnotationConfigApplicationContext(Configuracion.class);
-        ejecutadorTareas = (ThreadPoolTaskExecutor) contexto.getBean("EjecutadorHilos");
+	ThreadPoolTaskExecutor ejecutadorTareas;
 
-        LOG.log(Level.INFO, "Creando {0} Hilos", NUMERO_HILOS);
+	try (AnnotationConfigApplicationContext contexto = new AnnotationConfigApplicationContext(
+		Configuracion.class)) {
 
-        for (int i = 1; i < NUMERO_HILOS; i++) {
+	    ejecutadorTareas = (ThreadPoolTaskExecutor) contexto.getBean("EjecutadorHilos");
 
-            HiloSimple hiloSimple = (HiloSimple) contexto.getBean("HiloSimple");
-            hiloSimple.setName("Hilo ".concat(String.valueOf(i)));
-            ejecutadorTareas.execute(hiloSimple);
+	    LOG.log(Level.INFO, "Creando {0} Hilos", NUMERO_HILOS);
 
-        }
+	    for (int i = 1; i < NUMERO_HILOS; i++) {
 
-        do {
+		HiloSimple hiloSimple = (HiloSimple) contexto.getBean("HiloSimple");
+		hiloSimple.setName("Hilo ".concat(String.valueOf(i)));
+		ejecutadorTareas.execute(hiloSimple);
 
-            int hilosActivos = ejecutadorTareas.getActiveCount();
+	    }
 
-            LOG.info(" ------------------- Hilos Activos: ".concat(String.valueOf(hilosActivos)).concat(" -------------------"));
+	    do {
 
-            try {
-                Thread.sleep(TIEMPO_ESPERA_HILOS);
-            } catch (InterruptedException e) {
-                LOG.warning("Error: ".concat(e.getMessage()));
-            }
+		int hilosActivos = ejecutadorTareas.getActiveCount();
 
-        } while (ejecutadorTareas.getActiveCount() != 0);
+		LOG.info(" ------------------- Hilos Activos: ".concat(String.valueOf(hilosActivos))
+			.concat(" -------------------"));
 
-        LOG.info("Cerramos el Ejecutador De Hilos Porque No Quedan Hilos Activos");
-        ejecutadorTareas.shutdown();
+		try {
+		    Thread.sleep(TIEMPO_ESPERA_HILOS);
+		} catch (InterruptedException e) {
+		    LOG.warning("Error: ".concat(e.getMessage()));
+		}
 
-        System.exit(0);
+	    } while (ejecutadorTareas.getActiveCount() != 0);
+	}
+	LOG.info("Cerramos el Ejecutador De Hilos Porque No Quedan Hilos Activos");
+	ejecutadorTareas.shutdown();
+
+	System.exit(0);
 
     }
 }
